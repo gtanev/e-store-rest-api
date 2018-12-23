@@ -1,0 +1,708 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Spring Boot REST API Example",
+    "version": "1.0.0",
+    "title": "eStore",
+    "contact": {
+      "email": "georgetjazz@gmail.com"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8443",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Order Entity",
+      "description": "<div align='right'>Endpoint for managing orders</div>"
+    },
+    {
+      "name": "Product Entity",
+      "description": "<div align='right'>Endpoint for managing products</div>"
+    }
+  ],
+  "consumes": [
+    "application/hal+json"
+  ],
+  "produces": [
+    "application/hal+json"
+  ],
+  "paths": {
+    "/api/v1/orders": {
+      "get": {
+        "tags": [
+          "Order Entity"
+        ],
+        "summary": "Returns a collection of all orders.",
+        "operationId": "findAllOrderUsingGET",
+        "produces": [
+          "application/json",
+          "application/hal+json",
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resources%3COrder%3E"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Order Entity"
+        ],
+        "summary": "Creates a new order.",
+        "operationId": "saveOrderUsingPOST",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The order object that needs to be created.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Order_"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource%3COrder%3E"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/orders/search/betweenTime": {
+      "get": {
+        "tags": [
+          "Order Entity"
+        ],
+        "summary": "Returns a collection of all orders made within a specified time period.",
+        "operationId": "findAllByCreatedAtBetweenOrderUsingGET",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "The creation time to filter orders from, specified in <b>yyyy.MM.dd HH:mm</b> format.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "The creation time to filter orders to, specified in <b>yyyy.MM.dd HH:mm</b> format.",
+            "required": false,
+            "type": "string",
+            "format": "date-time",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource%3COrder%3E"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/orders/{id}": {
+      "get": {
+        "tags": [
+          "Order Entity"
+        ],
+        "summary": "Returns an order by ID.",
+        "operationId": "findByIdOrderUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the order to return.",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource%3COrder%3E"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Order Entity"
+        ],
+        "summary": "Deletes an order by ID.",
+        "operationId": "deleteByIdOrderUsingDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the order to delete.",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/products": {
+      "get": {
+        "tags": [
+          "Product Entity"
+        ],
+        "summary": "Returns a collection of all products.",
+        "operationId": "findAllProductUsingGET",
+        "produces": [
+          "application/json",
+          "application/hal+json",
+          "text/uri-list",
+          "application/x-spring-data-compact+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resources%3CProduct%3E"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Product Entity"
+        ],
+        "summary": "Creates a new product.",
+        "operationId": "saveProductUsingPOST",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The product object that needs to be created.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource%3CProduct%3E"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/products/search/byName": {
+      "get": {
+        "tags": [
+          "Product Entity"
+        ],
+        "summary": "Returns a product by name.",
+        "operationId": "findByNameProductUsingGET",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "The name of the product to find.",
+            "required": true,
+            "type": "string",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource%3CProduct%3E"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/v1/products/{id}": {
+      "get": {
+        "tags": [
+          "Product Entity"
+        ],
+        "summary": "Returns a product by ID.",
+        "operationId": "findByIdProductUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the product to return.",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource%3CProduct%3E"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "Product Entity"
+        ],
+        "summary": "Updates an existing product.",
+        "operationId": "saveProductUsingPATCH",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The product object that needs to be updated.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Product_"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the product.",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Resource%3CProduct%3E"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "EmbeddedCollection<Order>": {
+      "type": "object",
+      "required": [
+        "orders"
+      ],
+      "properties": {
+        "orders": {
+          "type": "array",
+          "description": "Resource collection",
+          "items": {
+            "$ref": "#/definitions/Order"
+          }
+        }
+      },
+      "title": "EmbeddedCollection<Order>",
+      "xml": {
+        "name": "content",
+        "wrapped": true
+      },
+      "description": "Embedded collection of Order"
+    },
+    "EmbeddedCollection<Product>": {
+      "type": "object",
+      "required": [
+        "products"
+      ],
+      "properties": {
+        "products": {
+          "type": "array",
+          "description": "Resource collection",
+          "items": {
+            "$ref": "#/definitions/Product"
+          }
+        }
+      },
+      "title": "EmbeddedCollection<Product>",
+      "xml": {
+        "name": "content",
+        "wrapped": true
+      },
+      "description": "Embedded collection of Product"
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string",
+          "xml": {
+            "name": "href",
+            "attribute": true,
+            "wrapped": false
+          }
+        },
+        "rel": {
+          "type": "string",
+          "xml": {
+            "name": "rel",
+            "attribute": true,
+            "wrapped": false
+          }
+        }
+      },
+      "title": "Link"
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "customerEmail": {
+          "type": "string",
+          "example": "email@example.com"
+        },
+        "orderTotal": {
+          "type": "number",
+          "example": 0
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderProduct"
+          }
+        }
+      },
+      "title": "Order"
+    },
+    "Order_": {
+      "type": "object",
+      "properties": {
+        "customerEmail": {
+          "type": "string",
+          "example": "email@example.com"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderProduct_"
+          }
+        }
+      },
+      "title": "Order"
+    },
+    "OrderProduct": {
+      "type": "object",
+      "required": [
+        "product",
+        "quantity"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Product Name"
+        },
+        "price": {
+          "type": "number"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "minimum": 1,
+          "exclusiveMinimum": false
+        },
+        "product": {
+          "type": "string",
+          "example": "https://localhost:8443/api/v1/products/1",
+          "description": "product url"
+        }
+      },
+      "title": "OrderProduct"
+    },
+    "OrderProduct_": {
+      "type": "object",
+      "required": [
+        "product",
+        "quantity"
+      ],
+      "properties": {
+        "product": {
+          "type": "string",
+          "example": "https://localhost:8443/api/v1/products/1",
+          "description": "product url"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "example": 1,
+          "minimum": 1,
+          "exclusiveMinimum": false
+        }
+      },
+      "title": "OrderProduct"
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Product Name"
+        },
+        "price": {
+          "type": "number",
+          "example": 0.5
+        }
+      },
+      "title": "Product"
+    },
+    "Product_": {
+      "type": "object",
+      "properties": {
+        "price": {
+          "type": "number",
+          "example": 0.5
+        }
+      },
+      "title": "Product"
+    },
+    "Resources<Order>": {
+      "type": "object",
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "properties": {
+        "_embedded": {
+          "$ref": "#/definitions/EmbeddedCollection%3COrder%3E"
+        },
+        "_links": {
+          "type": "object",
+          "description": "Link collection",
+          "additionalProperties": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resources<Order>",
+      "xml": {
+        "name": "entities",
+        "attribute": false,
+        "wrapped": false
+      },
+      "description": "Resources of Order"
+    },
+    "Resources<Product>": {
+      "type": "object",
+      "required": [
+        "_embedded",
+        "_links"
+      ],
+      "properties": {
+        "_embedded": {
+          "$ref": "#/definitions/EmbeddedCollection%3CProduct%3E"
+        },
+        "_links": {
+          "type": "object",
+          "description": "Link collection",
+          "additionalProperties": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resources<Product>",
+      "xml": {
+        "name": "entities",
+        "attribute": false,
+        "wrapped": false
+      },
+      "description": "Resources of Product"
+    },
+    "Resource<Order>": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "customerEmail": {
+          "type": "string",
+          "example": "email@example.com"
+        },
+        "orderTotal": {
+          "type": "number",
+          "example": 0
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderProduct"
+          }
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resource<Order>"
+    },
+    "Resource<Product>": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Product Name"
+        },
+        "price": {
+          "type": "number",
+          "example": 0.5
+        },
+        "links": {
+          "type": "array",
+          "xml": {
+            "name": "link",
+            "namespace": "http://www.w3.org/2005/Atom",
+            "attribute": false,
+            "wrapped": false
+          },
+          "items": {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      },
+      "title": "Resource<Product>"
+    }
+  }
+}
